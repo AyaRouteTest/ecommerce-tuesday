@@ -205,9 +205,10 @@ export const webhook = asyncHandler(async (req, res) => {
   // Handle the event
   const orderId = event.data.object.metadata.orderId;
   if (event.type === "checkout.session.completed") {
-    await Order.findByIdAndUpdate(orderId, { status: "payed" });
+    console.log("completed!");
+    await Order.findOneAndUpdate({ _id: orderId }, { status: "payed" });
     return;
   }
-  await Order.findByIdAndUpdate(orderId, { status: "failed payment" });
+  await Order.findByIdAndUpdate({ _id: orderId }, { status: "failed payment" });
   return;
 });
