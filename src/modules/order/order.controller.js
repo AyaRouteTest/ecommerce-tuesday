@@ -183,3 +183,28 @@ export const cancelOrder = asyncHandler(async (req, res, next) => {
 
   return res.json({ success: true, message: "order canceled successfully!" });
 });
+
+export const webhook = async (req, res) => {
+  const stripe = new Stripe(process.env.STIPE_KEY);
+  const sig = req.headers["stripe-signature"];
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.ENDPOINT_SECRET
+    );
+  } catch (err) {
+    res.status(400).send(`Webhook Error: ${err.message}`);
+    return;
+  }
+
+  // Handle the event
+  const orderId = event.data.object.metadata.orderId;
+  if (event.type === "checkout.session.completed") {
+    await Order.findByIdAndUpdate(orderId, { status: "payed" });
+    return;
+  }
+  await Order.findByIdAndUpdate(orderId, { status: "failed payment" });
+  return;
+};
