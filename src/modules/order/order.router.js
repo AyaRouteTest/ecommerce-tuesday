@@ -20,7 +20,7 @@ router.patch(
 router.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  asyncHandler(order.webhook)
+  order.webhook
 );
 
 export default router;

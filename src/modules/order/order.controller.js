@@ -184,7 +184,7 @@ export const cancelOrder = asyncHandler(async (req, res, next) => {
   return res.json({ success: true, message: "order canceled successfully!" });
 });
 
-export const webhook = async (req, res) => {
+export const webhook = asyncHandler(async (req, res) => {
   const stripe = new Stripe(process.env.STIPE_KEY);
   const sig = req.headers["stripe-signature"];
   let event;
@@ -207,4 +207,4 @@ export const webhook = async (req, res) => {
   }
   await Order.findByIdAndUpdate(orderId, { status: "failed payment" });
   return;
-};
+});
