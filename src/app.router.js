@@ -41,11 +41,10 @@ export const appRouter = (app, express) => {
   app.use(cors()); // allow all origins
 
   // global middleware
-  app.use(express.json()); // parse req.body json
-
-  // multer 2:
-  // 1- file upload
-  // 2- parsing multipart or formdata
+  app.use((req, res, next) => {
+    if (req.originalUrl.includes("/order/webhook")) return next();
+    express.json()(req, res, next);
+  }); // parse req.body json
 
   // Routes
   // auth

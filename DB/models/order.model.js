@@ -31,9 +31,18 @@ const orderSchema = new Schema(
       name: String,
       discount: { type: Number, min: 1, max: 100 },
     },
+
     status: {
       type: String,
-      enum: ["placed", "shipped", "delivered", "canceled", "refunded"],
+      enum: [
+        "placed",
+        "shipped",
+        "delivered",
+        "canceled",
+        "refunded",
+        "payed",
+        "failed to pay",
+      ],
       default: "placed",
     },
     payment: {
