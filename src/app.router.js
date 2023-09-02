@@ -42,9 +42,21 @@ export const appRouter = (app, express) => {
 
   // global middleware
   app.use((req, res, next) => {
+<<<<<<< HEAD
     if (req.originalUrl.includes("/order/webhook")) return next();
     express.json()(req, res, next);
   }); // parse req.body json
+=======
+    if (req.originalUrl === "/order/webhook") {
+      return next();
+    }
+    express.json()(req, res, next);
+  }); // parse req.body json
+
+  // multer 2:
+  // 1- file upload
+  // 2- parsing multipart or formdata
+>>>>>>> 2d5de5870a19f01593442d015d49f73de8a5481c
 
   // Routes
   // auth

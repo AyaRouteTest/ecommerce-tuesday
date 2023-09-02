@@ -36,12 +36,20 @@ const orderSchema = new Schema(
       type: String,
       enum: [
         "placed",
+<<<<<<< HEAD
+=======
+        "payed",
+        "failed payment",
+>>>>>>> 2d5de5870a19f01593442d015d49f73de8a5481c
         "shipped",
         "delivered",
         "canceled",
         "refunded",
+<<<<<<< HEAD
         "payed",
         "failed to pay",
+=======
+>>>>>>> 2d5de5870a19f01593442d015d49f73de8a5481c
       ],
       default: "placed",
     },
